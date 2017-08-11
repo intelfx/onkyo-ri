@@ -82,4 +82,7 @@ function(avr_flash target)
 	                                             -U eeprom:w:$<TARGET_FILE:${target}>.eep.bin:r
 	                  DEPENDS ${target}.bin ${target}.eep.bin
 	                  VERBATIM USES_TERMINAL)
+	add_custom_target(erase
+	                  COMMAND ${AVRDUDE_CMDLINE} -e
+	                  VERBATIM USES_TERMINAL)
 endfunction()
