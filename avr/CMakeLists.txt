@@ -20,6 +20,13 @@
 # This file is the main build script of the RI decoder firmware.
 #
 
+# Default overrides for the toolchain file and AVRTools.cmake.
+set(MCU "atmega328p")
+set(F_CPU "16000000")
+set(AVR_LFUSE "0xFF")
+set(AVR_HFUSE "0xD9")
+set(AVR_EFUSE "0xFC")
+
 project(OnkyoRI_AVR C)
 cmake_minimum_required(VERSION 3.2)
 
