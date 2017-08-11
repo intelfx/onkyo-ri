@@ -30,7 +30,7 @@ set(AVRDUDE_PROGRAMMER "usbtiny" CACHE STRING "Programmer name for the avrdude t
 set(AVRDUDE_MCU "${MCU}" CACHE STRING "AVR part name for the avrdude tool")
 set(AVRDUDE_ARGS "" CACHE STRING "Extra arguments for the avrdude tool")
 
-set(AVRDUDE_CMDLINE "${AVRDUDE}" -c "${AVRDUDE_PROGRAMMER}" -p "${AVRDUDE_MCU}" ${AVRDUDE_ARGS})
+set(AVRDUDE_CMDLINE ${AVRDUDE} -c "${AVRDUDE_PROGRAMMER}" -p "${AVRDUDE_MCU}" ${AVRDUDE_ARGS})
 
 set(AVR_LFUSE "" CACHE STRING "AVR low fuse byte, blank to ignore")
 set(AVR_HFUSE "" CACHE STRING "AVR high fuse byte, blank to ignore")
