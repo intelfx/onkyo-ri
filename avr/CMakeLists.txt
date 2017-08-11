@@ -25,8 +25,25 @@ cmake_minimum_required(VERSION 3.2)
 
 include(AVRTools.cmake)
 
+set(UART_BAUD "9600" CACHE STRING "Baud rate for the on-chip UART engine")
+
 add_executable(main
-               main.c)
+	main.c
+	timer_counter.c
+	uart.c
+	util.c
+	event.c
+)
+
+target_compile_options(main PRIVATE
+	-fwrapv
+)
+target_compile_definitions(main PRIVATE
+	-DUART_BAUD=${UART_BAUD}
+)
+target_link_libraries(main PRIVATE
+	-Wl,-u,vfprintf -lprintf_min
+)
 
 avr_flash(main)
 avr_set_fuses()
