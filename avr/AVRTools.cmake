@@ -65,7 +65,7 @@ function(avr_flash target)
 	                   COMMAND ${CMAKE_OBJCOPY} -j .text -j .data
 	                                            -O binary
 	                                            $<TARGET_FILE:${target}>
-	                                            ${target}.bin
+	                                            $<TARGET_FILE:${target}>.bin
 	                   DEPENDS ${target}
 	                   VERBATIM)
 	add_custom_command(OUTPUT ${target}.eep.bin
@@ -73,7 +73,7 @@ function(avr_flash target)
 	                                            --change-section-lma .eeprom=0
 	                                            -O binary
 	                                            $<TARGET_FILE:${target}>
-	                                            ${target}.eep.bin
+	                                            $<TARGET_FILE:${target}>.eep.bin
 	                   DEPENDS ${target}
 	                   VERBATIM)
 	add_custom_target(flash
