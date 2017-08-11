@@ -30,8 +30,23 @@ set(CMAKE_AR /usr/bin/avr-gcc-ar)
 set(CMAKE_RANLIB /usr/bin/avr-gcc-ranlib)
 set(CMAKE_NM /usr/bin/avr-gcc-nm)
 
-set(MCU "attiny85" CACHE STRING "AVR core/part")
-set(F_CPU "16500000" CACHE STRING "AVR core frequency in Hz")
+#
+# To override these defaults, a project may set() their default part/frequency
+# before calling project(). This is possible because the toolchain file is
+# evaluated inside the project() command.
+#
+# The following dance is needed to allow overrides in form of plain set()
+# without CACHE (to relieve the project from typing their own docstrings).
+#
+
+if (NOT MCU)
+	set(MCU "attiny85")
+endif()
+if (NOT F_CPU)
+	set(F_CPU "1000000")
+endif()
+set(MCU "${MCU}" CACHE STRING "AVR core/part")
+set(F_CPU "${F_CPU}" CACHE STRING "AVR core frequency in Hz")
 
 set(CMAKE_ASM_FLAGS "" CACHE STRING "Assembly flags")
 set(CMAKE_C_FLAGS "" CACHE STRING "C flags")

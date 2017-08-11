@@ -32,9 +32,10 @@ set(AVRDUDE_ARGS "" CACHE STRING "Extra arguments for the avrdude tool")
 
 set(AVRDUDE_CMDLINE ${AVRDUDE} -c "${AVRDUDE_PROGRAMMER}" -p "${AVRDUDE_MCU}" ${AVRDUDE_ARGS})
 
-set(AVR_LFUSE "" CACHE STRING "AVR low fuse byte, blank to ignore")
-set(AVR_HFUSE "" CACHE STRING "AVR high fuse byte, blank to ignore")
-set(AVR_EFUSE "" CACHE STRING "AVR extended fuse byte, blank to ignore")
+# Honor project-specific defaults, if present.
+set(AVR_LFUSE "${AVR_LFUSE}" CACHE STRING "AVR low fuse byte, blank to ignore")
+set(AVR_HFUSE "${AVR_HFUSE}" CACHE STRING "AVR high fuse byte, blank to ignore")
+set(AVR_EFUSE "${AVR_EFUSE}" CACHE STRING "AVR extended fuse byte, blank to ignore")
 
 function(avr_set_fuses)
 	add_custom_target(getfuse
