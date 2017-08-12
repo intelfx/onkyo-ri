@@ -31,7 +31,6 @@
 #include <util/delay.h>
 
 #include "config.h"
-#include "eeprom.h"
 #include "io.h"
 #include "timer_counter.h"
 #include "util.h"
