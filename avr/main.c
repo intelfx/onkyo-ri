@@ -131,10 +131,10 @@ void ri_received(uint16_t value)
 void ri_fsm(bool value, uint16_t pin_change_delta)
 {
 #define DELTA_GREATER(low) \
-	(pin_change_delta >= MS_TO_CLOCKS(low, COUNTER_TICK_MS*1000))
+	(pin_change_delta >= (uint16_t)(low / COUNTER_TICK_MS))
 
 #define DELTA_LESS(high) \
-	(pin_change_delta <= MS_TO_CLOCKS(high, COUNTER_TICK_MS*1000))
+	(pin_change_delta <= (uint16_t)(high / COUNTER_TICK_MS))
 
 #define DELTA_IN_RANGE(low, high) \
 	(DELTA_GREATER(low) && DELTA_LESS(high))
