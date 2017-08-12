@@ -27,17 +27,17 @@
 
 #define elementsof(a) (sizeof((a)) / sizeof((a)[0]))
 
-#define MS_TO_CLOCKS(ms, freq) ((double)(freq) * (double)(ms) / 1000)
+#define MS_TO_CLOCKS(ms, freq) ((ms) * (freq) / 1000)
+#define CLOCKS_TO_MS(clk, freq) ((clk) * 1000 / (freq))
 
 #ifdef DEBUG
 # define log(fmt, args...) fprintf(stderr, "LOG: " fmt "\n", ## args)
-# define assert(expr) do { if (!(expr)) { abort_msg("ABORT: (" #expr ") == 0\n"); } } while (0)
-# define assert_msg(expr, msg) do { if (!(expr)) { abort_msg("ABORT: " msg "\n"); } } while (0)
+# define assert(expr) do { if (!(expr)) { abort_msg("\nABORT: (" #expr ") == 0\n"); } } while (0)
+# define assert_msg(expr, msg) do { if (!(expr)) { abort_msg("\nABORT: " msg "\n"); } } while (0)
 #else
 # define log(fmt, args...) do {} while (0)
 # define assert(expr) do { if (!(expr)) { abort_msg(NULL); } } while (0)
 # define assert_msg(expr, msg) do { if (!(expr)) { abort_msg(NULL); } } while (0)
 #endif
-
 
 void __attribute__((noreturn)) abort_msg(const char *message);

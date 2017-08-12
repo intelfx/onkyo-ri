@@ -28,4 +28,6 @@
 #define LED PORTB, 5
 #define RI PORTD, 2
 
+// TODO: when comparing counter ticks with milliseconds, calculate and use
+//       "real" COUNTER_TICK_MS to account for rounding errors in MS_TO_CLOCKS().
 #define COUNTER_TICK_MS 0.25

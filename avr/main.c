@@ -115,8 +115,6 @@ enum ri_fsm_state
 	STATE_BIT_HIGH,
 	STATE_BIT_LOW,
 	STATE_TRAILER_HIGH,
-	// STATE_TRAILER_LOW // equal to STATE_INITIAL
-	// STATE_ERROR // equal to STATE_INITIAL
 };
 
 enum ri_fsm_state ri_fsm_state;
@@ -127,7 +125,7 @@ uint8_t ri_fsm_tmp_bit_count = 0;
 void ri_received(uint16_t value)
 {
 	log("RI value received: 0x%04x", value);
-	printf("0x%04x", value);
+	printf("INPUT: 0x%04x\n", value);
 }
 
 void ri_fsm(bool value, uint16_t pin_change_delta)
@@ -249,19 +247,22 @@ int main(void)
 
 		case PIN_CHANGE:
 			/*
-			 * Note that this correctly handles overflows:
+			 * Note that this correctly handles (single) overflows:
 			 * if timer counter overflowed and e.timestamp < pin_change_timestamp,
 			 * the subtraction will over(under)flow too, yielding a
 			 * correct result (i. e. 1 - 0xFFFF = 2).
+			 * If the counter overflowed more than once, things won't work
+			 * (that's why we pick a 16-bit counter).
 			 */
 			pin_change_delta = e.timestamp - pin_change_timestamp;
 
-			log("pin change: %d, %d.%01d ms since previous",
-			    e.pin_change.value,
-			    (e.timestamp - pin_change_timestamp) / 4,
-			    ((e.timestamp - pin_change_timestamp) % 4) * 25);
+			log("pin change: %u, %u ticks = %u.%02u ms since previous",
+			    (unsigned)e.pin_change.value,
+			    (unsigned)pin_change_delta,
+			    (unsigned)pin_change_delta * (unsigned)(COUNTER_TICK_MS * 100) / 100,
+			    (unsigned)pin_change_delta * (unsigned)(COUNTER_TICK_MS * 100) % 100);
 
-			ri_fsm(e.pin_change.value, e.timestamp - pin_change_timestamp);
+			ri_fsm(e.pin_change.value, pin_change_delta);
 			pin_change_timestamp = e.timestamp;
 			break;
 		}

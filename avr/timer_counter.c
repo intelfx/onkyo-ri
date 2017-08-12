@@ -43,10 +43,12 @@ void timer_counter_init(void)
 
 void timer_counter_set_period(uint8_t ticks)
 {
-	log("timer_counter_set_period(%u ticks = %lu.%02lu ms)",
+#define TIMER_COUNTER_TICK_MS ((double)1000 / TIMER_COUNTER_FREQ)
+	log("timer_counter_set_period: freq %u, %u ticks = %u.%03u ms",
+	    (unsigned)TIMER_COUNTER_FREQ,
 	    (unsigned)ticks,
-	    (unsigned long)ticks * 1000 / TIMER_COUNTER_FREQ,
-	    (unsigned long)ticks * 1000 * 100 / TIMER_COUNTER_FREQ % 100);
+	    (unsigned)ticks * (unsigned)(TIMER_COUNTER_TICK_MS * 1000) / 1000,
+	    (unsigned)ticks * (unsigned)(TIMER_COUNTER_TICK_MS * 1000) % 1000);
 
 	OCR0A = ticks - 1;
 }
