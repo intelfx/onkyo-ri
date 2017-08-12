@@ -158,6 +158,8 @@ void ri_fsm(bool value, uint16_t pin_change_delta)
 	switch (ri_fsm_state) {
 	case STATE_INITIAL:
 		if (value && DELTA_GREATER(20)) {
+			ri_fsm_tmp_value = 0;
+			ri_fsm_tmp_bit_count = 0;
 			RI_FSM_GO(STATE_HEADER_HIGH);
 		} else {
 			RI_FSM_ERROR();
@@ -211,8 +213,6 @@ void ri_fsm(bool value, uint16_t pin_change_delta)
 	case STATE_TRAILER_HIGH:
 		if (!value && DELTA_IN_RANGE(0.5, 1.5)) {
 			ri_received(ri_fsm_tmp_value);
-			ri_fsm_tmp_value = 0;
-			ri_fsm_tmp_bit_count = 0;
 			RI_FSM_GO(STATE_INITIAL);
 		} else {
 			RI_FSM_ERROR();
