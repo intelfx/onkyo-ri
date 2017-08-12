@@ -74,6 +74,7 @@ void setup(void)
 	 */
 
 	timer_counter_init();
+	timer_counter_set_period(MS_TO_CLOCKS(COUNTER_TICK_MS, TIMER_COUNTER_FREQ));
 
 	/*
 	 * Main input -- external interrupt 0
@@ -227,8 +228,8 @@ int main(void)
 {
 	setup();
 	log("setup() completed");
+	printf("READY\n");
 
-	timer_counter_set_period(MS_TO_CLOCKS(COUNTER_TICK_MS, TIMER_COUNTER_FREQ));
 	timer_counter_start();
 
 	uint16_t pin_change_timestamp = 0;
