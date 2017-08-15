@@ -44,6 +44,30 @@ developers to link to this project under the "Supported Hardware / Home-brew"
 section.
 
 
+Motivation
+----------
+
+The overall motivation to use Onkyo RI instead of directly pointing the IR remote
+at the HTPC is to leverage the (potentially better) existing IR receiver instead
+of buying another one (which is probably worse in terms of sensitivity).
+For example, my Onkyo AV receiver is capable of successfully decoding IR signals
+reflected by the walls or furniture or sent from another room (pointing the
+remote at an open door).
+
+Thus, the easiest way to send/receive Onkyo RI commands with a PC is to use a
+GPIO line and wire it up to the AV receiver, then point LIRC at that GPIO line
+(assuming Linux kernel knows how to operate the GPIO). However, typical x86
+systems do not have ready-to-be-accessed GPIOs, so we need a USB-GPIO controller —
+with the easiest example being any of the FTDI chips, like the FT232RL. Actually,
+LIRC does even have a driver for them.
+
+There is just a single problem with FTDI chips: they lack interrupts. They
+require the CPU to poll them for samples (while the limited internal sample buffer
+only helps so much). Yes, I know that USB does not have real interrupts, but I'd
+rather poll with the host-controller and not with the CPU. Essentially, what I
+wanted is a USB-GPIO controller with edge-triggered interrupts, and here we go.
+
+
 License
 -------
 
