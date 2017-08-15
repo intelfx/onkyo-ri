@@ -71,7 +71,7 @@ wanted is a USB-GPIO controller with edge-triggered interrupts, and here we go.
 License
 -------
 
-This project is distributed under the terms of a [GNU General Public License
+This project is distributed under the terms of the [GNU General Public License
 (GPL), version 3][4].
 
     This program is free software: you can redistribute it and/or modify
