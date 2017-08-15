@@ -276,7 +276,9 @@ error:
 
 int lirccode_uart_decode(struct ir_remote *remote, struct decode_ctx_t *ctx)
 {
-	return map_code(remote, ctx, 0, 0, drv.code_length, rcv_code, 0, 0);
+	log_debug("lirccode_uart: decode(): returning 0x%x", rcv_code);
+
+	return map_code(remote, ctx, 0, 0, remote->bits, rcv_code, 0, 0);
 }
 
 /*
