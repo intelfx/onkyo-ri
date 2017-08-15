@@ -73,6 +73,9 @@ target_compile_definitions(lirccode_uart PRIVATE
 target_link_libraries(lirccode_uart PRIVATE
 	PkgConfig::LIRC
 )
+set_property(TARGET lirccode_uart
+	PROPERTY PREFIX ""
+)
 
 #
 # Install the driver to the designated directory.
